@@ -1,0 +1,32 @@
+{
+  "name": "cors_worker",
+  "version": "1.0.0",
+  "description": "CORS Web Workers Wrapper class around the Worker object. Uses the Blog api to build Workers from scripts in different domains. The Worker script can be in domain A and you can import scripts from domain B, C, D ... etc. The worker is loaded asynchronously, but things can be done in a synchronous matter.",
+  "main": "index.js",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  },
+  "devDependencies": {
+    "gulp-if": "^2.0.1",
+    "gulp-plumber": "^1.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/j-paulino/cors-web-worker.git"
+  },
+  "keywords": [
+    "Web",
+    "Worker",
+    "JS",
+    "Javascript"
+  ],
+  "author": "Joel Paulino",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/j-paulino/cors-web-worker/issues"
+  },
+  "homepage": "https://github.com/j-paulino/cors-web-worker#readme"
+}
