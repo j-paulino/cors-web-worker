@@ -2,8 +2,7 @@
 
 ## CORS Web Workers
 Wrapper class around the Worker object. Uses the Blog api to build Workers from scripts in different domains. The Worker
-script can be in domain A and you can import scripts from domain B, C, D ... etc. The worker is loaded asynchronously, but things
-can be done in a synchronous matter.
+script can be host at domain A and you can import scripts from domain B, C, D...etc. The worker is assemble asynchronously, but things can be done in a synchronous matter.
 
 ### Post messages to your worker before it's created. The messages will be queued until the worker is ready.
 ```javascript
