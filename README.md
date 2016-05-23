@@ -9,10 +9,7 @@ script can be hosted at domain A and you can import scripts from domain B, C, D.
 var importScriptsList = [importScript1Url, importScript2Url];
 
 var worker = new CORSWorker(workerUrl, importScriptsList);
-worker.postMessage('1st');
-worker.postMessage('2nd');
-worker.postMessage('3rd');
-worker.postMessage({test: 'sks'});
+worker.postMessage({test: [1, 2, 3]});
 ```
 
 ### Event handler can be declared before the worker has loaded, but will be attached once the worker is ready.
