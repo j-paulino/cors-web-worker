@@ -1,7 +1,7 @@
 (function () {
     "use strict";
     // Creating a promise
-    //TODO; ADD more support for more VERBS
+    //TODO; ADD support more VERBS
     var http = {
         get: request('get')
     };
