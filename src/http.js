@@ -11,7 +11,6 @@
         return function (url) {
             var promise = new Promise(function (resolve, reject) {
                 var request = new XMLHttpRequest();
-
                 request.open(verb, url);
                 request.send();
 

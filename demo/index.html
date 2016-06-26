@@ -6,10 +6,10 @@
 </head>
 <body>
 <div id="target"></div>
-<script src="../dist/cors-worker.min.js"></script>
+<script src="../dist/cors-worker.js"></script>
 <script>
     var url = 'https://raw.githubusercontent.com/j-paulino/host-simple-web-worker/master/simple_worker.js';
-    var worker = new CORSWorker(url, []);
+    var worker = new CORSWorker(url);
 
     worker.postMessage('1st');
     worker.postMessage('2nd');
