@@ -10,6 +10,8 @@ var importScriptsList = ['script1.js', 'http://example.com/js/script2.js'];
 
 // You can pass scripts on instantiation 
 var worker = new CORSWorker(workerUrl, importScriptsList);
+worker.postMessage('test');
+
 // Or you can Import them in your worker file using importScripts
 // worker.js
 importScripts('script1.js');
