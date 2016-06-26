@@ -1,6 +1,6 @@
 (function () {
     "use strict";
-    //TODO; ADD more support for more VERBS
+    //TODO; ADD support for more VERBS
     var http = {
         get: request('get')
     };
