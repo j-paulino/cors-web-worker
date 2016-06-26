@@ -6,10 +6,15 @@ script can be hosted at domain A and you can import scripts from domain B, C, D.
 
 ### Post messages to your worker before it's created. The messages will be queued until the worker is ready.
 ```javascript
-var importScriptsList = [importScript1Url, importScript2Url];
+var importScriptsList = ['script1.js', 'http://example.com/js/script2.js'];
 
+// You can pass scripts on instantiation 
 var worker = new CORSWorker(workerUrl, importScriptsList);
-worker.postMessage({test: [1, 2, 3]});
+// Or you can Import them in your worker file using importScripts
+// worker.js
+importScripts('script1.js');
+importScripts('http://example.com/js/script2.js');
+...
 ```
 
 ### Event handler can be declared before the worker has loaded, but will be attached once the worker is ready.
