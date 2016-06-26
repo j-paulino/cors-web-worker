@@ -8,7 +8,7 @@ script can be hosted at domain A and you can import scripts from domain B, C, D.
 ```javascript
 var importScriptsList = ['script1.js', 'http://example.com/js/script2.js'];
 
-// You can pass scripts on instantiation 
+// You can pass scripts to import on instantiation 
 var worker = new CORSWorker(workerUrl, importScriptsList);
 worker.postMessage('test');
 
