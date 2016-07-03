@@ -1,16 +1,13 @@
 (function () {
     "use strict";
 
-    function CORSWorker(url, scriptsToImport, dontFetchImmediately) {
+    function CORSWorker(url, dontFetchImmediately) {
         var self = this;
-        scriptsToImport = scriptsToImport || [];
         this.url = url;
         this.__msgQueue = [];
         this.__eventsQueue = [];
 
-        buildImportList(self, scriptsToImport).then(function (blobImportStr) {
-            if (!dontFetchImmediately) self.fetch(blobImportStr);
-        });
+        if (!dontFetchImmediately) self.fetch();
     }
 
     /**
@@ -21,32 +18,17 @@
      * @method fetch
      * @return {Boolean} Promise
      */
-    CORSWorker.prototype.fetch = function fetch(blobImportStr) {
-        var self = this,
-            blobImportStr = blobImportStr || '',
-            importStrings, imports;
-
+    CORSWorker.prototype.fetch = function fetch() {
+        var self = this;
         return (
             http.get(this.url).then(function (resText) {
-                var workerText, blob;
+                var  blob = new Blob([resText], {type: 'application/javascript'});
 
-                importStrings = resText.match(/importScripts\(([^)]+)\)/g) || [];
-                resText = removeFileImports(resText, importStrings);
-                imports = cleanUpFileImports(importStrings);
+                self.worker = new Worker(window.URL.createObjectURL(blob));
 
-                workerText = blobImportStr + resText;
+                processQueues(self);
 
-                return buildImportList(self, imports).then(function (importStr) {
-                    workerText = importStr + workerText;
-                    blob = new Blob([workerText], {type: 'application/javascript'});
-
-                    self.worker = new Worker(window.URL.createObjectURL(blob));
-
-                    processQueues(self);
-
-                    return self.worker;
-                });
-
+                return self.worker;
             })
         );
     };
@@ -93,39 +75,6 @@
         }
     };
 
-    function createBlobFromJSFile(url) {
-        return http.get(url)
-            .then(function (resText) {
-                var blob = new Blob([resText], {type: 'application/javascript'});
-                return window.URL.createObjectURL(blob);
-            });
-    }
-
-    function buildImportList(CORSWorker, urlList) {
-        var importListPromises = [];
-        urlList.forEach(function (url) {
-            if (url) {
-                importListPromises.push(createBlobFromJSFile(url));
-            }
-        });
-
-        return Promise.all(importListPromises).then(function (values) {
-            CORSWorker.blobUrls = values;
-            return getImportString(values);
-        });
-    }
-
-    function getImportString(blobUrlList) {
-        var buffer = [],
-            windowSelf = 'window = self;\n';
-
-        blobUrlList.forEach(function (url) {
-            buffer.push('"' + url + '"');
-        });
-
-        return buffer.length ? windowSelf + "importScripts(" + buffer.join(',') + ");\n" : '';
-    }
-
     //Insure the eventListeners and eventHandlers get setup properly
     function processQueues(foreignWorker) {
         var msgArgs, i,
@@ -157,25 +106,6 @@
 
         foreignWorker.__msgQueue = null;
         foreignWorker.__eventsQueue = null;
-    }
-
-    function removeFileImports(rawText, imports) {
-        imports.forEach(function (importItem) {
-            rawText = rawText.replace(importItem, '');
-        });
-
-        return rawText;
-    }
-
-    function cleanUpFileImports(imports) {
-        return imports
-            .map(function (importItem) {
-                return importItem
-                    .replace('importScripts', '')
-                    .replace('(', '')
-                    .replace(')', '')
-                    .replace(new RegExp('\'', 'g'), '');
-            }).join(',').split(',');
     }
 
     window.CORSWorker = CORSWorker;
