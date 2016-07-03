@@ -6,8 +6,6 @@ Wrapper class around the Worker object. Uses the Blob api to build Workers from 
 ### Post messages to your worker before it's created. 
 #### The messages will be queued until the worker is ready.
 ```javascript
-
-// You can pass scripts to import on instantiation 
 var worker = new CORSWorker('http://example.com/js/worker.js');
 worker.postMessage('test');
 
