@@ -11,17 +11,6 @@ Wrapper class around the Worker object. Uses the Blob api to build Workers from 
 var worker = new CORSWorker('http://example.com/js/worker.js');
 worker.postMessage('test');
 
-// Or you can Import them in your worker file using importScripts
-// worker.js
-importScripts('http://example.com/js/script2.js');
-...
-```
-
-### Event handler can be declared before the worker has loaded.
-#### It will be attached once the worker is ready.
-```javascript
-var worker = new CORSWorker(workerUrl, importScriptsList);
-
 worker.onmessage = function (e) {
     var target = document.querySelector('#target');
     var html = e.data + "<br />";
