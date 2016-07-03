@@ -1,21 +1,18 @@
 # CORSWorker.js
 
 ## CORS Web Workers
-Wrapper class around the Worker object. Uses the Blob api to build Workers from scripts in different domains. The Worker
-script can be hosted at domain A and you can import scripts from domain B, C, D...etc. The worker is assemble asynchronously, but things can be done in a synchronous matter.
+Wrapper class around the Worker object. Uses the Blob api to build Workers from scripts in different domains. The worker is assemble asynchronously, but things can be done in a synchronous matter.
 
 ### Post messages to your worker before it's created. 
 #### The messages will be queued until the worker is ready.
 ```javascript
-var importScriptsList = ['script1.js', 'http://example.com/js/script2.js'];
 
 // You can pass scripts to import on instantiation 
-var worker = new CORSWorker(workerUrl, importScriptsList);
+var worker = new CORSWorker('http://example.com/js/worker.js');
 worker.postMessage('test');
 
 // Or you can Import them in your worker file using importScripts
 // worker.js
-importScripts('script1.js');
 importScripts('http://example.com/js/script2.js');
 ...
 ```
